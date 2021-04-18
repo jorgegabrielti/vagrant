@@ -1,0 +1,52 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+### VM Setup variables
+BOX_NAME       = "centos"
+BOX            = "generic/centos8" # You can search for boxes at https://vagrantcloud.com/search
+HOSTNAME       = "host"
+PORT_FORWARD   = "10022"
+DIR_HOST       = "C:\\Users\\jorge\\Documents\\vagrant-projects\\CentOS\\vm-loop"
+DIR_GUEST      = "/vagrant_data"
+CPU            = "1"
+RAM            = "1024"
+
+# Locale
+ENV["LC_ALL"] = "en_US.UTF-8"
+
+# VM Loop Config
+vms = {
+   "host-01" => {
+      guest:22, host:10022
+   },
+   "host-02" => { 
+      guest:22, host:10023
+   }
+}
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+   vms.each_with_index do |(host, i), index|
+      config.vm.define host do |box|
+         box.vm.box              = (BOX)
+         box.vm.hostname         = host 
+         box.vm.box_check_update = false
+         box.vm.network "forwarded_port", guest: "#{i[:guest]}", host: "#{i[:host]}", host_ip: "127.0.0.1" 
+         box.vm.synced_folder (DIR_HOST), (DIR_GUEST)
+      
+         box.vm.provider "virtualbox" do |vb|
+            vb.gui    = true
+            vb.cpus   = (CPU)
+            vb.memory = (RAM)
+         end
+      
+         box.vm.provision "shell", inline: <<-SHELL
+            dnf update -y
+            sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g'\
+                  /etc/ssh/sshd_config
+            systemctl restart sshd
+         SHELL
+      end
+   end
+end
