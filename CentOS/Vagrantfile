@@ -13,11 +13,12 @@ DIR_GUEST      = "/vagrant_data"
 CPU            = "1"
 RAM            = "1024"
 
+# Locale
+ENV["LC_ALL"] = "en_US.UTF-8"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    
    config.vm.define (BOX_NAME) do |box|
-
       box.vm.box              = (BOX)
       box.vm.hostname         = (HOSTNAME) 
       box.vm.box_check_update = false
@@ -36,7 +37,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                   /etc/ssh/sshd_config
          systemctl restart sshd
       SHELL
-   
    end
-
 end
