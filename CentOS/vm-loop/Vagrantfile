@@ -8,7 +8,7 @@ BOX_NAME       = "centos"
 BOX            = "generic/centos8" # You can search for boxes at https://vagrantcloud.com/search
 HOSTNAME       = "host"
 PORT_FORWARD   = "10022"
-DIR_HOST       = "<HOST DIRECTORY>"
+DIR_HOST       = "C:\\Users\\jorge\\Documents\\backup-shell"
 DIR_GUEST      = "/vagrant_data"
 CPU            = "1"
 RAM            = "1024"
@@ -19,10 +19,10 @@ ENV["LC_ALL"] = "en_US.UTF-8"
 # VM Loop Config
 vms = {
    "host-01" => {
-      guest:22, host:10022
+      guest:22, host:10022, ip: "192.168.50.4",
    },
    "host-02" => { 
-      guest:22, host:10023
+      guest:22, host:10023, ip: "192.168.50.5",
    }
 }
 
@@ -32,7 +32,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
          box.vm.box              = (BOX)
          box.vm.hostname         = host 
          box.vm.box_check_update = false
-         box.vm.network "forwarded_port", guest: "#{i[:guest]}", host: "#{i[:host]}", host_ip: "127.0.0.1" 
+         #box.vm.network "forwarded_port", guest: "#{i[:guest]}", host: "#{i[:host]}", host_ip: "127.0.0.1"
+         box.vm.network "private_network", ip: "#{i[:ip]}",
+            virtualbox__intnet:true
          box.vm.synced_folder (DIR_HOST), (DIR_GUEST)
       
          box.vm.provider "virtualbox" do |vb|
