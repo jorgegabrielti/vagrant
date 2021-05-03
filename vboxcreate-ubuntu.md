@@ -24,8 +24,14 @@ sudo reboot
 \
 Add the line to user vagrant on **/etc/sudoers**
 
+
+
 ```bash
-sudo vim /etc/sudoers
+sudo update-alternatives --config editor
+```
+
+```bash
+sudo visudo
 ```
 
 ```bash
@@ -65,14 +71,26 @@ sudo service ssh restart
 sudo service sshd restart
 ```
 
+### Finally, let's clean the machine to be as dry as possible
+```bash
+sudo apt autoremove
+sudo apt autoclean
+sudo apt clean
+
+sudo dd if=/dev/zero of=/EMPTY bs=1M
+sudo rm -f /EMPTY
+
+$ cat /dev/null > ~/.bash_history && history -c && exit
+```
+
 Poweroff the machine
 ```bash
 init 0
 ```
 
-Export the vm with the following command
+### Packaging vm with the following command
 ```bash
-vagrant package --base ubuntu-desktop_20.04
+vagrant package --base ubuntu_server-20.04
 ```
 
 The package.box file will be in the current directory
@@ -82,7 +100,7 @@ package.box
 
 To add the box just
 ```bash
-vagrant box add --name ubuntu_desktop-20.04 package.box
+vagrant box add --name ubuntu_server-20.04 package.box
 ```
 
 ```bash
