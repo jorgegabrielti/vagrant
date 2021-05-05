@@ -2,7 +2,7 @@
 
 ```
 sudo apt update
-sudo apt install -y build-essential linux-headers-$(uname -r)
+sudo apt install -y build-essential linux-headers-$(uname -r) dkms
 ```
 
 ![Add Guest Additions](img/ubuntu-20_04-guestadditions.png)
