@@ -5,20 +5,27 @@ In this tutorial, we go to build a vagrantbox base Ubuntu 20.04. The provider wi
 The steps will be:
 - Download of ISO on https://ubuntu.com/download;
 - Create a vm on Oracle Virtualbox;
+- Add Guest Additions and configure it;
 - Configuring Portforward in this vm;
 - Prepare the vm to build a lean box;
 - Create a box;
 - Test;
 - Publish the box on VagrantCloud.
 
+## Configuring Portforward in this vm
 
+### In File - Preferences - Network
+
+
+![Image](img/portforward-vbox1.png)
+
+![Image](img/portforward-vbox.png)
+
+## Prepare the vm to build a lean box
+
+### Add Guest Additions and configure it
 ![Image](img/vboxadditions.png)
 
-### Install *openssh-server*
-```bash
-apt install -y openssh-server
-systemctl enable --now sshd
-```
 
 ### Configuring Virtualbox Additions
 ```bash
@@ -46,6 +53,12 @@ visudo
 ```bash
 vagrant ALL=(ALL)  NOPASSWD:ALL
 ```
+### Install *openssh-server*
+```bash
+apt install -y openssh-server
+systemctl enable --now sshd
+```
+
 
 ### Configure vagrant insecure key
 ```bash
@@ -87,9 +100,13 @@ vagrant package --base ubuntu-20.04 --output ubuntu-20.04.box
 
 ### And add the box to the list of available boxes
 ```bash
-vagrant box add ubuntu-20.04 ubuntu-20.04.box --box-version 1.0
+vagrant box add ubuntu-20.04 ubuntu-20.04.box
 ```
 
+### Generate a checksum to box
 ```bash
 sha1sum ubuntu-20.04.box
 ```
+### Publish the vagrant cloudless box
+
+![](img/vagrant_cloud_addprovider_checksum1.png)
