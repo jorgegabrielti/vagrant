@@ -5,13 +5,13 @@ VAGRANTFILE_API_VERSION = "2"
 
 ### VM Setup variables
 BOX_NAME       = "ubuntu"
-BOX            = "ubuntu_server-20.04" # You can search for boxes at https://vagrantcloud.com/search
+BOX            = "jgabriel/ubuntu-20.04" # You can search for boxes at https://vagrantcloud.com/search
 HOSTNAME       = "ubuntu"
 PORT_FORWARD   = "80"
 DIR_HOST       = "C:\\Users\\jorge\\Documents\\gitlab-certification"
 DIR_GUEST      = "/vagrant_data"
 CPU            = "1"
-RAM            = "2048"
+RAM            = "1024"
 
 
 # Locale
@@ -22,7 +22,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    config.vm.define (BOX_NAME) do |box|
       box.vm.box              = (BOX)
       box.vm.hostname         = (HOSTNAME)
-      #box.vm.box_version = "1.0" 
+      box.vm.box_version = "1.0" 
       #box.vm.box_check_update = false
       box.vm.network "forwarded_port", guest: 3000, host: (PORT_FORWARD), host_ip: "127.0.0.1"
       box.vm.synced_folder (DIR_HOST), (DIR_GUEST)
