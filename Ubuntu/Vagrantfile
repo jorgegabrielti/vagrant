@@ -5,7 +5,7 @@ VAGRANTFILE_API_VERSION = "2"
 
 ### VM Setup variables
 BOX_NAME       = "ubuntu"
-BOX            = "jgabriel/ubuntu-20.04" # You can search for boxes at https://vagrantcloud.com/search
+BOX            = "ubuntu/trusty64" # You can search for boxes at https://vagrantcloud.com/search
 HOSTNAME       = "ubuntu"
 PORT_FORWARD   = "80"
 DIR_HOST       = "C:\\Users\\jorge\\Documents\\gitlab-certification"
