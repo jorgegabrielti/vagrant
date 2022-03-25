@@ -32,7 +32,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
          vb.gui    = (VM_GUI)
          vb.cpus   = (CPU)
          vb.memory = (RAM)
-         
+      ### Requirements: 
+      # vagrant plugin install vagrant-disksize   
       box.disksize.size = (DISK)
       end
    end
