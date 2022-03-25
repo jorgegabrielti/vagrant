@@ -22,8 +22,8 @@ ENV["LC_ALL"] = "en_US.UTF-8"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    
    config.vm.define (BOX_NAME) do |box|
-      box.vm.box              = (BOX)
-      box.vm.hostname         = (HOSTNAME)
+      box.vm.box         = (BOX)
+      box.vm.hostname    = (HOSTNAME)
       box.vm.box_version = "1.1" 
       box.vm.network "forwarded_port", guest: 3000, host: (PORT_FORWARD), host_ip: "127.0.0.1"
       box.vm.synced_folder (DIR_HOST), (DIR_GUEST)
@@ -32,7 +32,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
          vb.gui    = (VM_GUI)
          vb.cpus   = (CPU)
          vb.memory = (RAM)
-         vb.disk   = (DISK)
+         
+      box.disksize.size = (DISK)
       end
    end
 end
