@@ -7,7 +7,8 @@ VAGRANTFILE_API_VERSION = "2"
 BOX_NAME       = "ubuntu-20.04"
 BOX            = "jgabriel/ubuntu-20.04" # You can search for boxes at https://vagrantcloud.com/search
 HOSTNAME       = "ubuntu"
-PORT_FORWARD   = "80"
+HOST_PORT      = "80"
+GUEST_PORT     = "80"
 DIR_HOST       = "../../../sre/sre-rootsetup"
 DIR_GUEST      = "/vagrant_data"
 VM_GUI         = "false"
@@ -25,7 +26,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       box.vm.box         = (BOX)
       box.vm.hostname    = (HOSTNAME)
       box.vm.box_version = "1.1" 
-      box.vm.network "forwarded_port", guest: 3000, host: (PORT_FORWARD), host_ip: "127.0.0.1"
+      box.vm.network "forwarded_port", guest: (GUEST_PORT), host: (HOST_PORT), host_ip: "127.0.0.1"
       box.vm.synced_folder (DIR_HOST), (DIR_GUEST)
       
       box.vm.provider "virtualbox" do |vb|
