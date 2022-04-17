@@ -1,6 +1,12 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# Require YAML module
+require 'yaml'
+ 
+# Read YAML file with box details
+VM = YAML.load_file('servers.yaml')
+
 VAGRANTFILE_API_VERSION = "2"
 
 ### VM Setup variables
