@@ -1,47 +1,52 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# Require YAML module
+### YAML module
 require 'yaml'
- 
-# Read YAML file with box details
-VM = YAML.load_file('servers.yaml')
 
-VAGRANTFILE_API_VERSION = "2"
+### Import default configs
+DEFAULT_CONFIGS = YAML.load_file 'conf/default_configs.yaml'
+
+### Vagrant API version
+VAGRANTFILE_API_VERSION = DEFAULT_CONFIGS['default_config']['vagrantfile_api_version']
+
+### Locale
+ENV["LC_ALL"] = DEFAULT_CONFIGS['default_config']['lc_all']
 
 ### VM Setup variables
-BOX_NAME       = "centos"
-BOX            = "generic/centos8" # You can search for boxes at https://vagrantcloud.com/search
+BOX_NAME       = DEFAULT_CONFIGS['box_config']['box_name']
+BOX            = DEFAULT_CONFIGS['box_config']['box'] # You can search for boxes at https://vagrantcloud.com/search
 HOSTNAME       = "centos8"
-PORT_FORWARD   = "10022"
-DIR_HOST       = "<DIRECTORY HOST>"
-DIR_GUEST      = "/vagrant_data"
+HOST_PORT      = "22"
+GUEST_PORT     = "10022"
+DIR_HOST       = "."
+DIR_GUEST      = "/vagrant"
+VM_GUI         = "false"
 CPU            = "1"
 RAM            = "1024"
+DISK           = "30GB"
 
-
-# Locale
-ENV["LC_ALL"] = "en_US.UTF-8"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-   
    config.vm.define (BOX_NAME) do |box|
-      box.vm.box              = (BOX)
-      box.vm.hostname         = (HOSTNAME) 
-      box.vm.box_check_update = false
-      box.vm.network "forwarded_port", guest: 22, host: (PORT_FORWARD), host_ip: "127.0.0.1"
+      box.vm.box         = (BOX)
+      box.vm.hostname    = (HOSTNAME)
+      box.vm.box_version = "1.0" 
+      box.vm.network "forwarded_port", guest: (GUEST_PORT), host: (HOST_PORT), host_ip: "127.0.0.1"
       box.vm.synced_folder (DIR_HOST), (DIR_GUEST)
       
       box.vm.provider "virtualbox" do |vb|
-         vb.gui    = true
+         vb.gui    = (VM_GUI)
          vb.cpus   = (CPU)
          vb.memory = (RAM)
-      end
+      ### Requirements: 
+      # vagrant plugin install vagrant-disksize   
+      # Corrigir tamanho do disco do boot
+      box.disksize.size = (DISK)
       
-      box.vm.provision "shell", inline: <<-SHELL
-         sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g'\
-                  /etc/ssh/sshd_config
-         systemctl restart sshd
-      SHELL
+      ### Provision
+      #config.vm.provision "shell", path: "boot-strap.sh"
+      end
    end
 end
+

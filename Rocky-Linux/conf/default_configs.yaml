@@ -1,0 +1,17 @@
+---
+default_config:
+  vagrantfile_api_version: '2'
+  lc_all: 'en_US.UTF-8'
+
+box_config:
+  box: "generic/centos8"
+  box_name: "centos"
+
+vm_config:
+  hostname: 'centos8'
+  port_forward: '10022'
+  dir_host: .
+  dir_guest: '/vagrant'
+  cpu: '1'
+  ram: '1024'
+...
