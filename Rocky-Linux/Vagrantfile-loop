@@ -37,22 +37,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
        box.vm.box_version = (BOX_VERSION) 
        box.vm.synced_folder (DIR_HOST), (DIR_GUEST)
 
-       box.vm.provider (BOX_PROVIDER) do |vb|
-         vb.gui    = (VM_GUI)
-         vb.cpus   = (CPU)
-         vb.memory = (RAM)
-         
-       ### Requirements: 
-       # vagrant plugin install vagrant-disksize   
-       # Corrigir tamanho do disco do boot
+       box.vm.provider (BOX_PROVIDER) do |bp|
+         bp.gui    = (VM_GUI)
+         bp.cpus   = (CPU)
+         bp.memory = (RAM)
+       end 
+
        box.disksize.size = (DISK)
 
        box.vm.network "forwarded_port", guest: (GUEST_PORT), host: (HOST_PORT),  host_ip: "127.0.0.1"
       
        ### Provision
        #config.vm.provision "shell", path: "boot-strap.sh"
-       end
+     end
    end
-end
 end
 

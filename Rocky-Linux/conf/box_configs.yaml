@@ -3,6 +3,7 @@ box_config:
   box: "jgabriel/ubuntu-20.04"
   box_name: "ubuntu"
   box_version: "1.0"
+  box_provider: 'virtualbox'
 
 vm_config:
   hostname: 'ubuntu'
