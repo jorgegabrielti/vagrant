@@ -2,22 +2,4 @@
 default_config:
   vagrantfile_api_version: '2'
   lc_all: 'en_US.UTF-8'
-
-box_config:
-  box: "jgabriel/centos8-stream"
-  box_name: "centos"
-  box_version: "1.0"
-
-vm_config:
-  hostname: 'centos8'
-  dir_host: './shared_folder'
-  dir_guest: '/vagrant'
-  cpu: '1'
-  ram: '1024'
-  disk: '30GB'
-  vmgui: 'false'
-
-network_config:
-  host_port: '22' 
-  guest_port: '10022'
 ...
