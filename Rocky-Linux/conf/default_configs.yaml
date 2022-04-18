@@ -4,14 +4,20 @@ default_config:
   lc_all: 'en_US.UTF-8'
 
 box_config:
-  box: "generic/centos8"
+  box: "jgabriel/centos8-stream"
   box_name: "centos"
+  box_version: "1.0"
 
 vm_config:
   hostname: 'centos8'
-  port_forward: '10022'
-  dir_host: .
+  dir_host: './shared_folder'
   dir_guest: '/vagrant'
   cpu: '1'
   ram: '1024'
+  disk: '30GB'
+  vmgui: 'false'
+
+network_config:
+  host_port: '22' 
+  guest_port: '10022'
 ...

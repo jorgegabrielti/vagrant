@@ -4,34 +4,31 @@
 ### YAML module
 require 'yaml'
 
-### Import default configs
+### Default configs
 DEFAULT_CONFIGS = YAML.load_file 'conf/default_configs.yaml'
-
-### Vagrant API version
 VAGRANTFILE_API_VERSION = DEFAULT_CONFIGS['default_config']['vagrantfile_api_version']
-
-### Locale
 ENV["LC_ALL"] = DEFAULT_CONFIGS['default_config']['lc_all']
 
-### VM Setup variables
+# -------------------------------------------------------------------------------------
+### Box confis
 BOX_NAME       = DEFAULT_CONFIGS['box_config']['box_name']
-BOX            = DEFAULT_CONFIGS['box_config']['box'] # You can search for boxes at https://vagrantcloud.com/search
-HOSTNAME       = "centos8"
-HOST_PORT      = "22"
-GUEST_PORT     = "10022"
-DIR_HOST       = "."
-DIR_GUEST      = "/vagrant"
-VM_GUI         = "false"
-CPU            = "1"
-RAM            = "1024"
-DISK           = "30GB"
-
+BOX            = DEFAULT_CONFIGS['box_config']['box']
+BOX_VERSION    = DEFAULT_CONFIGS['box_config']['box_version'] 
+HOSTNAME       = DEFAULT_CONFIGS['vm_config']['hostname']
+DIR_HOST       = DEFAULT_CONFIGS['vm_config']['dir_host']
+DIR_GUEST      = DEFAULT_CONFIGS['vm_config']['dir_guest']
+CPU            = DEFAULT_CONFIGS['vm_config']['cpu']
+RAM            = DEFAULT_CONFIGS['vm_config']['ram']
+DISK           = DEFAULT_CONFIGS['vm_config']['disk']
+VM_GUI         = DEFAULT_CONFIGS['vm_config']['vmgui']
+HOST_PORT      = DEFAULT_CONFIGS['network_config']['host_port']
+GUEST_PORT     = DEFAULT_CONFIGS['network_config']['guest_port']
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    config.vm.define (BOX_NAME) do |box|
       box.vm.box         = (BOX)
       box.vm.hostname    = (HOSTNAME)
-      box.vm.box_version = "1.0" 
+      box.vm.box_version = (BOX_VERSION) 
       box.vm.network "forwarded_port", guest: (GUEST_PORT), host: (HOST_PORT), host_ip: "127.0.0.1"
       box.vm.synced_folder (DIR_HOST), (DIR_GUEST)
       
