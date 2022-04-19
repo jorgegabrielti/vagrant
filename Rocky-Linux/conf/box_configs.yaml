@@ -11,7 +11,7 @@
    ram: '512'
    disk: '10GB'
    vmgui: 'false'
-   host_port: '10020' 
+   host_port: '10050' 
    guest_port: '22'
    file_provision: './provision/hello-world.sh'
   
@@ -27,23 +27,7 @@
    ram: '512'
    disk: '10GB'
    vmgui: 'false'
-   host_port: '10021' 
-   guest_port: '22'
-   file_provision: './provision/hello-world.sh'
-
- - name: vm3
-   box: jgabriel/ubuntu-20.04
-   box_name: ubuntu
-   box_version: "1.0"
-   box_provider: 'virtualbox'
-   hostname: 'ubuntu'
-   dir_host: './shared_folder'
-   dir_guest: '/vagrant'
-   cpu: '1'
-   ram: '512'
-   disk: '10GB'
-   vmgui: 'false'
-   host_port: '10022' 
+   host_port: '10060' 
    guest_port: '22'
    file_provision: './provision/hello-world.sh'
 ...
