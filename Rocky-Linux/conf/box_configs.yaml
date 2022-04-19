@@ -1,20 +1,31 @@
 ---
-box_config:
-  box: "jgabriel/ubuntu-20.04"
-  box_name: "ubuntu"
-  box_version: "1.0"
-  box_provider: 'virtualbox'
-
-vm_config:
-  hostname: 'ubuntu'
-  dir_host: './shared_folder'
-  dir_guest: '/vagrant'
-  cpu: '1'
-  ram: '1024'
-  disk: '30GB'
-  vmgui: 'false'
-
-network_config:
-  host_port: '10022' 
-  guest_port: '22'
+ - name: vm1
+   box: jgabriel/ubuntu-20.04
+   box_name: ubuntu
+   box_version: "1.0"
+   box_provider: 'virtualbox'
+   hostname: 'ubuntu'
+   dir_host: './shared_folder'
+   dir_guest: '/vagrant'
+   cpu: '1'
+   ram: '1024'
+   disk: '30GB'
+   vmgui: 'false'
+   host_port: '10022' 
+   guest_port: '22'
+  
+ - name: vm2
+   box: jgabriel/ubuntu-20.04
+   box_name: ubuntu
+   box_version: "1.0"
+   box_provider: 'virtualbox'
+   hostname: 'ubuntu'
+   dir_host: './shared_folder'
+   dir_guest: '/vagrant'
+   cpu: '1'
+   ram: '1024'
+   disk: '30GB'
+   vmgui: 'false'
+   host_port: '10022' 
+   guest_port: '22'
 ...

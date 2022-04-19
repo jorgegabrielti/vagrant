@@ -13,46 +13,26 @@ ENV["LC_ALL"] = DEFAULT_CONFIGS['default_config']['lc_all']
 ### Box confis
 BOX_CONFIGS = YAML.load_file 'conf/box_configs.yaml'
 
-# ---
-BOX_NAME       = BOX_CONFIGS['box_config']['box_name']
-BOX            = BOX_CONFIGS['box_config']['box']
-BOX_VERSION    = BOX_CONFIGS['box_config']['box_version'] 
-BOX_PROVIDER   = BOX_CONFIGS['box_config']['box_provider']
-HOSTNAME       = BOX_CONFIGS['vm_config']['hostname']
-DIR_HOST       = BOX_CONFIGS['vm_config']['dir_host']
-DIR_GUEST      = BOX_CONFIGS['vm_config']['dir_guest']
-CPU            = BOX_CONFIGS['vm_config']['cpu']
-RAM            = BOX_CONFIGS['vm_config']['ram']
-DISK           = BOX_CONFIGS['vm_config']['disk']
-VM_GUI         = BOX_CONFIGS['vm_config']['vmgui']
-HOST_PORT      = BOX_CONFIGS['network_config']['host_port']
-GUEST_PORT     = BOX_CONFIGS['network_config']['guest_port']
-# ---
-
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-   (BOX_CONFIGS).each_with_index do | (machine, m), index|
-     config.vm.define (BOX_NAME) do |box|
-       box.vm.box         = (BOX)
-       box.vm.hostname    = (HOSTNAME)
-       box.vm.box_version = (BOX_VERSION) 
-       box.vm.synced_folder (DIR_HOST), (DIR_GUEST)
-
-       box.vm.provider (BOX_PROVIDER) do |vb|
-         vb.gui    = (VM_GUI)
-         vb.cpus   = (CPU)
-         vb.memory = (RAM)
-         
-       ### Requirements: 
-       # vagrant plugin install vagrant-disksize   
-       # Corrigir tamanho do disco do boot
-       box.disksize.size = (DISK)
-
-       box.vm.network "forwarded_port", guest: (GUEST_PORT), host: (HOST_PORT),  host_ip: "127.0.0.1"
+  BOX_CONFIGS.each do |env|
+    config.vm.define env['name'] do |box|
+      box.vm.box         = env['box']
+      box.vm.hostname    = env['hostname']
+      box.vm.box_version = env['box_version'] 
+      box.vm.synced_folder env['dir_host'], env['dir_guest']
+      box.vm.provider env['box_provider'] do |vb|
+        vb.gui    = env['vmgui']
+        vb.cpus   = env['cpu']
+        vb.memory = env['ram']
+      end 
+      ### Requirements: 
+      # vagrant plugin install vagrant-disksize   
+      # Corrigir tamanho do disco do boot
+      box.disksize.size = env['disk']
+      box.vm.network "forwarded_port", guest: env['guest_port'], host: env['host_port'],  host_ip: "127.0.0.1"
       
-       ### Provision
-       #config.vm.provision "shell", path: "boot-strap.sh"
-       end
-   end
+      ### Provision
+      #config.vm.provision "shell", path: "boot-strap.sh"
+    end
+  end
 end
-end
-
