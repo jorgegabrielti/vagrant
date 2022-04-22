@@ -28,7 +28,7 @@ dnf update -y
 
 - Install commun packages
 ```bash
-dnf install \
+dnf install -y \
   vim \
   curl \
   wget \
