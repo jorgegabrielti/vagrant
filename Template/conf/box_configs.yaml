@@ -1,7 +1,7 @@
 ---
- - name: vm1
-   box: jgabriel/rockylinux-8.5
-   box_name: ubuntu
+ - name: 'vm1'
+   box: 'jgabriel/rockylinux-8.5'
+   box_name: 'ubuntu'
    box_version: "1.0"
    box_provider: 'virtualbox'
    hostname: 'ubuntu'
