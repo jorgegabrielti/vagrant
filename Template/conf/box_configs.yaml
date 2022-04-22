@@ -1,6 +1,6 @@
 ---
  - name: vm1
-   box: jgabriel/ubuntu-20.04
+   box: jgabriel/rockylinux-8.5
    box_name: ubuntu
    box_version: "1.0"
    box_provider: 'virtualbox'
@@ -12,22 +12,6 @@
    disk: '10GB'
    vmgui: 'false'
    host_port: '10050' 
-   guest_port: '22'
-   file_provision: './provision/hello-world.sh'
-  
- - name: vm2
-   box: jgabriel/ubuntu-20.04
-   box_name: ubuntu
-   box_version: "1.0"
-   box_provider: 'virtualbox'
-   hostname: 'ubuntu'
-   dir_host: './shared_folder'
-   dir_guest: '/vagrant'
-   cpu: '1'
-   ram: '512'
-   disk: '10GB'
-   vmgui: 'false'
-   host_port: '10060' 
    guest_port: '22'
    file_provision: './provision/hello-world.sh'
 ...

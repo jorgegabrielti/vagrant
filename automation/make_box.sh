@@ -13,3 +13,9 @@
 - Poweroff the machine
 - Export to pack the vm
 - Make a box
+
+
+```bash
+vagrant package --base rocky-linux --output rocky-linux.box
+vagrant box add --name rockylinux-8.5 --provider virtualbox rocky-linux.box
+```
