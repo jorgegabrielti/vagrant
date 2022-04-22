@@ -44,6 +44,26 @@ dnf groupinstall -y 'Development Tools'
 ```
 
 - Install Vbox Guest Additions
+```bash
+dnf install -y \
+  gcc \
+  make \
+  perl \
+  kernel-devel \
+  kernel-headers \
+  bzip2 \
+  dkms
+```
+
+```bash
+dnf update -y kernel-*
+```
+
+```bash
+mount /dev/cdrom /media && cd /media
+./VBoxLinuxAdditions.run
+```
+
 - Configure vagrant user
 - Configure sudoers.d to vagrant user
 - Configure vagrant ssh keys
