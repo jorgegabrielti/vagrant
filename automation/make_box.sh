@@ -55,12 +55,13 @@ dnf install -y \
   dkms
 ```
 
-```bash
-dnf update -y kernel-*
-```
+#```bash
+#dnf update -y kernel-*
+#```
 
 ```bash
 mount /dev/cdrom /media && cd /media
+/sbin/rcvboxadd quicksetup all
 ./VBoxLinuxAdditions.run
 ```
 
