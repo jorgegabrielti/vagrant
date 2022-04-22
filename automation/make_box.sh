@@ -1,9 +1,48 @@
 #!/bin/bash
 
 # STEPS:
-- Check distro
+- Distro detect
+```bash
+# Test: [OK]
+distro_detect () {
+  echo -e "\e[40;32;1m[TASK]: distro_detect\e[m\n"
+  DISTRO="$(grep -Ei 'PRETTY_NAME' /etc/os-release | cut -d'=' -f2 | tr -d '"'  | cut -d'.' -f1,2)"
+  
+  case ${DISTRO} in
+    "Ubuntu 20.04")
+      echo -e "\tDistro: [${DISTRO}]\n"
+    ;;
+    *)
+      echo "Distro: [${DISTRO}] ==> Not supported!"
+    ;;
+  esac
+}
+
+```
+
 - Update system
+```bash
+dnf install -y epel-release
+dnf update -y
+```
+
 - Install commun packages
+```bash
+dnf install \
+  vim \
+  curl \
+  wget \
+  tmux \
+  mtr \
+  tcpdump \
+  netcat
+```
+
+- Install Development Tools
+```bash
+dnf groupinstall -y 'Development Tools'
+```
+
 - Install Vbox Guest Additions
 - Configure vagrant user
 - Configure sudoers.d to vagrant user
