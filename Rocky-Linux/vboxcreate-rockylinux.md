@@ -1,21 +1,38 @@
-# Create a vbox base Ubuntu 20.04
+# Create a vbox base Rocky Linux 9
 
+Create a user vagrant:
 ```
-sudo apt update
-sudo apt install -y build-essential linux-headers-$(uname -r) dkms
+useradd vagrant 
+passwd vagrant
+```
+---
+
+Update system and install epel-release repository:
+```
+sudo dnf update -y
+sudo dnf install -y epel-release
 ```
 
-![Add Guest Additions](img/ubuntu-20_04-guestadditions.png)
+Install packages to update kernel
+```
+sudo dnf install -y gcc make perl kernel-devel kernel-headers bzip2 dkms
+sudo dnf update -y kernel-*
+```
 
+Insert the "Guest Additions CB Image..."
 
+![Add Guest Additions](img/rocky_linux_vboxadditions.png)
+
+Mount the media:
 ```bash
-sudo mount /dev/cdrom /media
+sudo mkdir -p /mnt/cdrom
+sudo mount /dev/cdrom /mnt/cdrom
 ```
 
 Install the Guest Additions running command **VboxLinuxAdditions.run**
 ```bash
-cd /media
-sudo ./VBoxLinuxAdditions.run
+cd /mnt/cdrom
+sudo sh ./VBoxLinuxAdditions.run --nox11
 ```
 
 ```bash
@@ -23,8 +40,6 @@ sudo reboot
 ```
 \
 Add the line to user vagrant on **/etc/sudoers**
-
-
 
 ```bash
 sudo update-alternatives --config editor
@@ -53,8 +68,7 @@ chown -R vagrant  /home/vagrant/.ssh
 
 ### OpenSSH Server configuration
 ```bash
-sudo apt-get install -y openssh-server
-sudo vi /etc/ssh/sshd_config
+sudo vim /etc/ssh/sshd_config
 ```
 
 Ajust the file 
@@ -73,14 +87,12 @@ sudo service sshd restart
 
 ### Finally, let's clean the machine to be as dry as possible
 ```bash
-sudo apt autoremove
-sudo apt autoclean
-sudo apt clean
+sudo dnf clean all
 
 sudo dd if=/dev/zero of=/EMPTY bs=1M
 sudo rm -f /EMPTY
 
-$ cat /dev/null > ~/.bash_history && history -c && exit
+cat /dev/null > ~/.bash_history && history -c && exit
 ```
 
 Poweroff the machine
@@ -90,19 +102,22 @@ init 0
 
 ### Packaging vm with the following command
 ```bash
-vagrant package --base ubuntu_server-20.04
+vagrant package --base RockyLinux9 --output RockyLinux9.box
 ```
 
-The package.box file will be in the current directory
+The RockyLinux9.box file will be in the current directory
 ```bash
-package.box
+RockyLinux9.box
 ```
 
 To add the box just
 ```bash
-vagrant box add --name ubuntu_server-20.04 package.box
+vagrant box add --name RockyLinux9 RockyLinux9.box
 ```
 
 ```bash
-vagrant box list
+vagrant box list 
 ```
+
+Referência:
+https://blog.ycshao.com/2017/09/16/how-to-upload-vagrant-box-to-vagrant-cloud/#:~:text=box%20file%20in%20your%20folder,and%20click%20%E2%80%9CCreate%20box%E2%80%9D.
