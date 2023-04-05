@@ -2,11 +2,10 @@
 
 ### Update system
 sudo apt update -y
-sudo apt install -y git
 
-### Clone project
-git clone https://github.com/jorgegabrielti/sre-rootsetup.git
+### Install Ansibleo
+sudo apt install -y git ansible sshpass curl
 
-cd sre-rootsetup
-chmod +x src/sre-setup
-src/sre-setup
+### Ansible - Check installation
+ansible --version
+
